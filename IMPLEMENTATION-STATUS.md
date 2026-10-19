@@ -18,7 +18,7 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 
 ## Still required before production
 - Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it
-- Add vessel deletion and category, specification and image editing (the vessel form covers the core listing fields only), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
+- Add vessel deletion, vessel image upload/editing, and category management (the five seeded vessel categories are placeholders; confirm names against approved business content), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
 - Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery
