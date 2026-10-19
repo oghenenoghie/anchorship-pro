@@ -41,6 +41,8 @@ npm run dev
 
 The seed script requires `DATABASE_URL` and reads `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the process environment. Set those variables again whenever you run the seed script to create/update the admin user.
 
+After deploying, open `/api/health` to check the configuration: it reports whether `DATABASE_URL`, the database (and its migrations), `AUTH_SECRET` and `NEXT_PUBLIC_SITE_URL` are usable, without revealing their values. Environment variable changes on Vercel only apply to new deployments, so redeploy after changing them.
+
 ## Security notes before production
 
 - Use a long random `AUTH_SECRET`; never commit `.env.local`.
