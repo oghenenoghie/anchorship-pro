@@ -1,0 +1,10 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+// Disclosure-pattern menu for widths below the lg breakpoint, where the header nav is hidden.
+export function MobileNav({links}:{links:[string,string][]}){const [open,setOpen]=useState(false);const pathname=usePathname();const toggle=useRef<HTMLButtonElement>(null);
+useEffect(()=>{setOpen(false)},[pathname]);
+useEffect(()=>{if(!open)return;const onKey=(e:KeyboardEvent)=>{if(e.key==="Escape"){setOpen(false);toggle.current?.focus();}};document.addEventListener("keydown",onKey);return()=>document.removeEventListener("keydown",onKey);},[open]);
+return <div className="lg:hidden"><button ref={toggle} type="button" aria-label="Main menu" aria-expanded={open} aria-controls="mobile-nav" onClick={()=>setOpen(o=>!o)} className="grid h-11 w-11 place-items-center rounded border border-slate-200 text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ocean">{open?<X size={22} aria-hidden/>:<Menu size={22} aria-hidden/>}</button>{open&&<div aria-hidden className="absolute inset-x-0 top-full h-screen bg-navy/40" onClick={()=>setOpen(false)}/>}<nav id="mobile-nav" aria-label="Main" hidden={!open} className="absolute inset-x-0 top-full max-h-[calc(100dvh-79px)] overflow-y-auto border-b border-slate-200 bg-white shadow-soft"><ul className="container-wide py-2">{links.map(([label,href])=>{const current=pathname===href||pathname.startsWith(href+"/");return <li key={href}><Link href={href} aria-current={current?"page":undefined} onClick={()=>setOpen(false)} className={`flex min-h-12 items-center border-b border-slate-100 text-base font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-ocean ${current?"text-ocean":"text-navy"}`}>{label}</Link></li>})}</ul><div className="container-wide pb-5 pt-3"><Link href="/contact" onClick={()=>setOpen(false)} className="btn btn-primary w-full">Contact our team <ArrowUpRight size={16} aria-hidden/></Link></div></nav></div>}

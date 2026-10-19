@@ -19,7 +19,6 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 ## Still required before production
 - Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it
 - Add the `/admin/vessels/[id]` edit page (vessel names in the admin list already link to it and currently 404)
-- Add a mobile navigation menu (the header nav is hidden below the `lg` breakpoint)
 - Complete edit/delete/publish workflows for vessels, full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
