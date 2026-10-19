@@ -21,9 +21,9 @@ A full-stack starter for an offshore and marine services website. The design dir
 
 ## Quick start
 
-1. Copy `.env.example` to `.env.local` and set `DATABASE_URL` and `AUTH_SECRET`.
+1. Copy `.env.example` to `.env.local` and set `DATABASE_URL` and `AUTH_SECRET`. `drizzle-kit` and the seed script load `.env.local` the same way Next.js does.
 2. Install dependencies: `npm install`.
-3. Generate and apply schema: `npm run db:generate` then `npm run db:migrate` (or `npm run db:push` for a disposable development database).
+3. Apply the schema: `npm run db:migrate` (or `npm run db:push` for a disposable development database). The initial migration is committed in `drizzle/`; after changing `src/db/schema.ts`, run `npm run db:generate` and commit the new migration.
 4. Create the first admin user by setting `ADMIN_EMAIL` and `ADMIN_PASSWORD` in your local shell, then run `npm run db:seed`. Seed data is demonstrative; do not use demo credentials in production.
 5. Run `npm run dev` and visit `http://localhost:3000`.
 
@@ -34,7 +34,7 @@ Copy-Item .env.example .env.local
 $env:ADMIN_EMAIL = "admin@example.com"
 $env:ADMIN_PASSWORD = "use-a-long-unique-password"
 npm install
-npm run db:push
+npm run db:migrate
 npm run db:seed
 npm run dev
 ```

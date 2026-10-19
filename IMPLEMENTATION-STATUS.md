@@ -10,8 +10,16 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 - Claude Code project instructions and six project-specific skills
 - robots.txt, sitemap and environment template
 
+## Verified during repository setup
+- `npm install`, `npm run typecheck` and `npm run build` pass; initial migration generated as `drizzle/0000_init.sql`
+- `npm run db:migrate` and `npm run db:seed` applied cleanly to PostgreSQL 16, and the seed is safe to re-run
+- Production server tested end to end: enquiry validation/honeypot, admin login/logout, role-guarded vessel creation, duplicate-slug rejection, draft vessels hidden from public pages, audit events recorded
+- Database-backed public pages render on demand, so newly published content appears without a rebuild
+
 ## Still required before production
-- Install dependencies and run migrations/typecheck/build in an environment with package registry access
+- Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it
+- Add the `/admin/vessels/[id]` edit page (vessel names in the admin list already link to it and currently 404)
+- Add a mobile navigation menu (the header nav is hidden below the `lg` breakpoint)
 - Complete edit/delete/publish workflows for vessels, full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed

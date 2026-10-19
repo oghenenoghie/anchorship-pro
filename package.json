@@ -16,7 +16,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
     "bcryptjs": "^2.4.3",
-    "drizzle-orm": "^0.38.4",
+    "drizzle-orm": "^0.45.4",
     "jose": "^5.9.6",
     "lucide-react": "^0.468.0",
     "next": "^15.1.4",
@@ -25,11 +25,13 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@next/env": "^15.5.28",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
-    "drizzle-kit": "^0.30.4",
+    "autoprefixer": "^10.6.1",
+    "drizzle-kit": "^0.31.11",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.19.2",
