@@ -41,6 +41,10 @@ npm run dev
 
 The seed script requires `DATABASE_URL` and reads `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the process environment. Set those variables again whenever you run the seed script to create/update the admin user.
 
+### Home hero video
+
+The home page hero plays a muted, looping background video when one is configured, and shows the poster image otherwise (also for visitors who prefer reduced motion or have data saving on). Use Anchorship's own or properly licensed footage only. Export a short loop (10–20 s) as MP4 (H.264, no audio, 1920×1080 or 1280×720, ideally under 8 MB), add it as `public/videos/hero.mp4`, and set `HERO_VIDEO_SRC` in `src/lib/site-media.ts` to `"/videos/hero.mp4"`. Alternatively set `NEXT_PUBLIC_HERO_VIDEO_URL` (and optionally `NEXT_PUBLIC_HERO_POSTER_URL`) to hosted files and redeploy.
+
 After deploying, open `/api/health` to check the configuration: it reports whether `DATABASE_URL`, the database (and its migrations), `AUTH_SECRET` and `NEXT_PUBLIC_SITE_URL` are usable, without revealing their values. Environment variable changes on Vercel only apply to new deployments, so redeploy after changing them.
 
 ## Security notes before production
