@@ -16,12 +16,22 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 - Production server tested end to end: enquiry validation/honeypot, admin login/logout, role-guarded vessel creation, duplicate-slug rejection, draft vessels hidden from public pages, audit events recorded
 - Database-backed public pages render on demand, so newly published content appears without a rebuild
 
+## Redesign (October 2026)
+- Marine design system: tokens, Inter/Manrope typography, shared components, nine custom category illustrations, navy header with accessible Vessels dropdown and mobile menu, structured footer
+- Homepage rebuilt around fleet search, the nine supplied vessel categories (live listing counts), featured vessels, services, process-based "Why Anchorship", conditional projects/news and a charter CTA
+- Catalogue: search, category, region, availability, listing type, minimum length/deadweight, sorting, pagination and result counts; category pages at `/vessels/category/<slug>`; richer vessel detail pages with metadata
+- Charter request flow at `/request-vessel` with vessel/category preselection, structured charter fields (migration 0002), field-level validation errors and server-confirmed reference numbers
+- Admin visual refresh: role-aware sidebar, real metrics, filterable vessel and enquiry lists with mobile layouts, new read-only enquiry detail page, sectioned vessel editor
+- Supplied categories inserted by migration 0003; earlier placeholder categories and their vessels are left untouched
+- Unit tests (`npm test`) for categories, catalogue parameters and enquiry validation; verified end to end against PostgreSQL 16 through a local Neon HTTP shim
+
 ## Still required before production
 - Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it
-- Add vessel deletion, vessel image upload/editing, and category management (the five seeded vessel categories are placeholders; confirm names against approved business content), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
+- Add vessel deletion, vessel image upload/editing, and category management (decide whether to retire the five earlier placeholder categories in existing databases), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
-- Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery
+- Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery; add approved contact details, office address, company history, privacy/legal pages and social links (none are published yet)
+- Confirm the service list in `src/lib/company.ts` (Vessel Chartering, Marine Equipment, Vessel Brokerage, Ship Management) against current offerings
 - Verify SEO redirects and existing URL preservation against the current live website
 
 Do not deploy this scaffold to production without completing the above and a security review.

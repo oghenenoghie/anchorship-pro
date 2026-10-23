@@ -8,6 +8,7 @@ You are working on the Anchorship.nl marine/offshore website. Read `README.md` a
 - Create original layouts and copy. Never copy another site's proprietary text, branding, or images.
 - Preserve existing user changes and business data.
 - Do not invent vessels, specifications, certifications, project history, availability, office addresses, or company claims.
+- Vessel categories are the nine supplied by the business (`src/lib/vessel-categories.ts`); UI work follows `.claude/skills/anchorship-design-system`.
 
 ## Engineering standards
 - Next.js App Router + strict TypeScript + Tailwind CSS.
@@ -21,4 +22,4 @@ You are working on the Anchorship.nl marine/offshore website. Read `README.md` a
 - Add or update tests for business-critical behavior.
 
 ## Definition of done
-Run `npm run typecheck`, relevant tests, and `npm run build` when possible. Report what was run, what passed, and any remaining risks. Do not claim a task is complete if it is only a UI placeholder.
+Run `npm run typecheck`, `npm test`, and `npm run build` when possible. Report what was run, what passed, and any remaining risks. Do not claim a task is complete if it is only a UI placeholder.
