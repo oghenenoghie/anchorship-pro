@@ -1,4 +1,132 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:#10212b;font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}.container-wide{width:min(1180px,calc(100% - 40px));margin-inline:auto}.eyebrow{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#176b87}.section-pad{padding-block:76px}.nav-link{font-size:.9rem;color:#31434d;transition:color .2s}.nav-link:hover{color:#176b87}.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.85rem 1.15rem;border-radius:4px;font-size:.9rem;font-weight:700;transition:transform .2s,background .2s}.btn:hover{transform:translateY(-1px)}.btn-primary{background:#176b87;color:white}.btn-dark{background:#0b1d2a;color:white}.btn-outline{border:1px solid #c8d3d8;color:#10212b}.card{border:1px solid #e0e7ea;background:white;border-radius:8px;overflow:hidden;transition:transform .22s,box-shadow .22s}.card:hover{transform:translateY(-3px);box-shadow:0 18px 55px rgba(11,29,42,.09)}.field{width:100%;border:1px solid #cbd6db;border-radius:4px;padding:.8rem .9rem;background:white;color:#10212b}.field:focus{outline:2px solid #176b87;outline-offset:1px}.admin-shell{min-height:100vh;background:#f4f6f7}.admin-nav{background:#0b1d2a;color:white}.table-wrap{overflow-x:auto}
+
+/* Anchorship marine design system. Tokens mirror tailwind.config.ts; see .claude/skills/anchorship-design-system. */
+@layer base {
+  :root {
+    color-scheme: light;
+    --navy: #071b2c; --navy-800: #102b40; --ocean: #145d7a; --marine: #22a6a1; --marine-300: #56d1cb;
+    --mist: #f4f7f9; --line: #dce5eb; --ink: #142536; --muted: #5b6e7e;
+    --header-h: 72px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: var(--font-inter), system-ui, sans-serif; font-size: 1rem; line-height: 1.65; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: var(--font-manrope), var(--font-inter), system-ui, sans-serif; color: var(--heading, var(--navy)); letter-spacing: -0.015em; line-height: 1.15; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a { color: inherit; text-decoration: none; }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  img { max-width: 100%; height: auto; }
+  ::selection { background: #cdeceb; color: var(--navy); }
+  :focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; border-radius: 2px; }
+  .surface-dark :focus-visible { outline-color: var(--marine-300); }
+  .surface-dark .surface-light :focus-visible { outline-color: var(--ocean); }
+}
+
+@layer components {
+  .container-wide { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 640px) { .container-wide { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .container-wide { padding-inline: 2rem; } }
+  .section-pad { padding-block: 4rem; }
+  @media (min-width: 768px) { .section-pad { padding-block: 5.5rem; } }
+  /* Headings take --heading, so utility colour classes still win inside dark surfaces. */
+  .surface-dark { --heading: #fff; background: var(--navy); color: #fff; }
+  .surface-light { --heading: var(--navy); }
+
+  .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .72rem; line-height: 1.2; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ocean); }
+  .eyebrow::before { content: ""; width: 1.25rem; height: 2px; background: var(--marine); border-radius: 1px; }
+  .eyebrow-plain::before { display: none; }
+  .surface-dark .eyebrow { color: var(--marine-300); }
+  .lead { font-size: 1.0625rem; line-height: 1.7; color: var(--muted); }
+  @media (min-width: 768px) { .lead { font-size: 1.125rem; } }
+
+  /* Buttons: one height scale (44px default, 36px small), modest radius. Teal = primary action only. */
+  .btn { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; gap: .5rem; padding: .625rem 1.15rem; border: 1px solid transparent; border-radius: 4px; font-size: .9rem; font-weight: 600; line-height: 1.2; white-space: nowrap; transition: background-color .2s, border-color .2s, color .2s, box-shadow .2s, transform .2s; }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled, .btn[aria-disabled="true"] { cursor: not-allowed; opacity: .6; }
+  .btn svg { flex-shrink: 0; }
+  .btn-sm { min-height: 2.25rem; padding: .4rem .85rem; font-size: .84rem; }
+  .btn-primary { background: var(--marine); color: var(--navy); }
+  .btn-primary:hover:not(:disabled) { background: #33b9b3; }
+  .btn-dark { background: var(--navy); color: #fff; }
+  .btn-dark:hover:not(:disabled) { background: var(--navy-800); }
+  .btn-outline, .btn-secondary { border-color: #c5d3dc; background: #fff; color: var(--navy); }
+  .btn-outline:hover:not(:disabled), .btn-secondary:hover:not(:disabled) { border-color: var(--navy); }
+  .btn-light { border-color: rgba(255,255,255,.35); color: #fff; }
+  .btn-light:hover:not(:disabled) { border-color: #fff; background: rgba(255,255,255,.06); }
+  .text-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 600; color: var(--ocean); }
+  .text-link:hover { color: var(--navy); }
+  .text-link svg { transition: transform .2s; }
+  .text-link:hover svg, .group:hover .text-link svg { transform: translateX(3px); }
+
+  .nav-link { position: relative; display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .875rem; font-weight: 500; color: #d3dee6; transition: color .2s; }
+  .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: .55rem; height: 2px; background: var(--marine); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+  .nav-link:hover, .nav-link[aria-current="page"] { color: #fff; }
+  .nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
+
+  /* Cards: thin border, restrained shadow, modest radius. */
+  .card { position: relative; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: #fff; transition: transform .25s, box-shadow .25s, border-color .25s; }
+  .card-hover:hover { transform: translateY(-2px); border-color: #c5d3dc; box-shadow: 0 18px 40px -18px rgba(7,27,44,.28); }
+  .panel { border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+
+  .label { display: grid; gap: .4rem; font-size: .84rem; font-weight: 600; color: var(--ink); }
+  .label-hint { font-size: .78rem; font-weight: 400; color: var(--muted); }
+  .field { width: 100%; min-height: 2.75rem; border: 1px solid #c5d3dc; border-radius: 4px; padding: .6rem .8rem; background: #fff; color: var(--ink); font-size: .95rem; transition: border-color .2s, box-shadow .2s; }
+  .field::placeholder { color: #8293a1; }
+  .field:hover { border-color: #a9bac6; }
+  .field:focus { outline: none; border-color: var(--ocean); box-shadow: 0 0 0 3px rgba(20,93,122,.18); }
+  .field[aria-invalid="true"] { border-color: #b42318; }
+  .field[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgba(180,35,24,.15); }
+  select.field { appearance: none; padding-right: 2.25rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%23145D7A' stroke-width='1.5' d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .85rem center; }
+  textarea.field { min-height: 7rem; resize: vertical; }
+  .field-error { font-size: .8rem; font-weight: 500; color: #b42318; }
+
+  .admin-shell { min-height: 100vh; background: var(--mist); }
+  .admin-nav { background: var(--navy); color: #fff; }
+  /* relative: keeps absolutely positioned descendants (e.g. sr-only labels) inside the scroll container. */
+  .table-wrap { position: relative; overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: .875rem; }
+  .data-table th { padding: .75rem 1rem; background: #f8fafb; border-bottom: 1px solid var(--line); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .data-table td { padding: .9rem 1rem; border-bottom: 1px solid #edf2f5; vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 0; }
+  .data-table tbody tr:hover { background: #fafcfd; }
+
+  /* Blueprint grid backgrounds for technical areas. */
+  .bg-blueprint { background-image: linear-gradient(rgba(20,93,122,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(20,93,122,.07) 1px, transparent 1px); background-size: 24px 24px; background-position: -1px -1px; }
+  .bg-blueprint-dark { background-image: linear-gradient(rgba(86,209,203,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(86,209,203,.07) 1px, transparent 1px), linear-gradient(rgba(86,209,203,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(86,209,203,.04) 1px, transparent 1px); background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px; background-position: -1px -1px; }
+
+  .skeleton { position: relative; overflow: hidden; background: #e9eff3; border-radius: 4px; }
+  .skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent); animation: shimmer 1.4s infinite; }
+}
+
+/* Marine illustration system (src/components/marine-illustration.tsx). One stroke weight, navy line work, teal accents. */
+@layer components {
+  .illus { --illus-ink: var(--navy-800); --illus-accent: var(--marine); --illus-fill: #fff; display: block; width: 100%; height: auto; overflow: hidden; color: var(--illus-ink); }
+  .illus-dark { --illus-ink: #e6eef3; --illus-accent: var(--marine-300); --illus-fill: var(--navy); }
+  .illus .ln { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .illus .fl { fill: var(--illus-fill); }
+  .illus .th { stroke-width: 1; }
+  .illus .hv { stroke-width: 3.5; }
+  .illus .ac { stroke: var(--illus-accent); transition: opacity .35s, stroke-width .35s; }
+  .illus .dash { stroke-dasharray: 3 3; }
+  .illus .dot { stroke-dasharray: 1 3.5; }
+  .illus .faint { opacity: .45; }
+  .illus .water { stroke: var(--illus-accent); }
+  .illus .wave { transition: transform 1.6s cubic-bezier(.2,.7,.2,1); }
+  .group:hover .illus .wave, .group:focus-visible .illus .wave { transform: translateX(-16px); }
+  .group:hover .illus .wave-2, .group:focus-visible .illus .wave-2 { transform: translateX(20px); }
+  .group:hover .illus .ac:not(.water) { stroke-width: 2; }
+  .illus-drift .wave { animation: wave-drift 9s linear infinite; }
+  .illus-drift .wave-2 { animation: wave-drift-back 13s linear infinite; }
+}
+
+@keyframes wave-drift { from { transform: translateX(0); } to { transform: translateX(-32px); } }
+@keyframes wave-drift-back { from { transform: translateX(-40px); } to { transform: translateX(0); } }
+@keyframes shimmer { to { transform: translateX(100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .illus-drift .wave, .illus-drift .wave-2 { animation: none; }
+}

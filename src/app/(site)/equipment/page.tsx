@@ -1,1 +1,41 @@
-import Link from "next/link";import { PageHero } from "@/components/page-hero";import { getPublishedContent } from "@/lib/queries";import { Anchor, ArrowUpRight } from "lucide-react";export const dynamic="force-dynamic";export default async function EquipmentPage(){let rows:Awaited<ReturnType<typeof getPublishedContent>>["equipment"]=[];try{rows=(await getPublishedContent()).equipment}catch{}return <><PageHero eyebrow="Equipment" title="Marine and offshore equipment." description="Browse published equipment records or contact us with a specific requirement."/><section className="section-pad"><div className="container-wide">{rows.length?<div className="grid gap-5 md:grid-cols-3">{rows.map(x=><article key={x.id} className="card">{x.imageUrl?<img src={x.imageUrl} alt={x.name} className="h-48 w-full object-cover"/>:<div className="grid h-48 place-items-center bg-mist"><Anchor size={34}/></div>}<div className="p-5"><h2 className="text-xl font-bold text-navy">{x.name}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{x.summary}</p><Link href={`/contact?subject=${encodeURIComponent("Equipment enquiry: "+x.name)}`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-ocean">Request details <ArrowUpRight size={16}/></Link></div></article>)}</div>:<div className="rounded-lg border border-dashed p-12 text-center"><Anchor size={34} className="mx-auto text-ocean"/><h2 className="mt-4 text-xl font-bold text-navy">Equipment catalogue</h2><p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">Add verified equipment records through the admin area to publish them here.</p><Link href="/contact" className="btn btn-primary mt-5">Make an equipment enquiry</Link></div>}</div></section></>}
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, Cog } from "lucide-react";
+import { PageHero } from "@/components/page-hero";
+import { EmptyState } from "@/components/empty-state";
+import { getPublishedContent } from "@/lib/queries";
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = { title: "Marine and Offshore Equipment", description: "Browse published marine and offshore equipment or send us a specific equipment requirement.", alternates: { canonical: "/equipment" } };
+const enquire = (name: string) => `/contact?type=equipment&subject=${encodeURIComponent(`Equipment enquiry: ${name}`)}`;
+export default async function EquipmentPage() {
+  let rows: Awaited<ReturnType<typeof getPublishedContent>>["equipment"] = [];
+  let failed = false;
+  try { rows = (await getPublishedContent()).equipment; } catch { failed = true; }
+  return (
+    <>
+      <PageHero eyebrow="Equipment" title="Marine and offshore equipment." description="Browse published equipment records or contact us with a specific requirement." breadcrumbs={[{ label: "Equipment" }]} />
+      <section className="bg-mist py-10 md:py-14">
+        <div className="container-wide">
+          {rows.length ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {rows.map(x => (
+                <article key={x.id} className="card card-hover flex flex-col">
+                  {x.imageUrl ? <img src={x.imageUrl} alt={x.name} loading="lazy" decoding="async" className="aspect-[16/10] w-full border-b border-line object-cover" /> : <div aria-hidden className="bg-blueprint grid aspect-[16/10] place-items-center border-b border-line text-ocean"><Cog size={36} strokeWidth={1.25} /></div>}
+                  <div className="flex flex-1 flex-col p-5">
+                    <h2 className="font-display text-lg font-bold">{x.name}</h2>
+                    {x.summary && <p className="mt-2 text-sm leading-6 text-muted">{x.summary}</p>}
+                    <Link href={enquire(x.name)} className="btn btn-outline btn-sm mt-auto w-fit">Request details <span className="sr-only">for {x.name}</span><ArrowRight size={15} aria-hidden /></Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <EmptyState icon={<Cog size={24} />} title={failed ? "The equipment catalogue is temporarily unavailable" : "Equipment catalogue"} actions={<Link href="/contact?type=equipment" className="btn btn-primary">Make an equipment enquiry <ArrowRight size={16} aria-hidden /></Link>}>
+              {failed ? "We could not load equipment records just now. You can still send us your equipment requirement." : "Published equipment records will appear here. In the meantime, tell us what equipment your operation needs."}
+            </EmptyState>
+          )}
+        </div>
+      </section>
+    </>
+  );
+}
