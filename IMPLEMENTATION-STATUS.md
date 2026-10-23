@@ -27,7 +27,7 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 
 ## Still required before production
 - Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it
-- Add vessel deletion, vessel image upload/editing, and category management (decide whether to retire the five earlier placeholder categories in existing databases), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
+- Add vessel deletion, vessel image upload/editing, and category management (the production Neon database has migrations 0002/0003 applied and its five unused placeholder categories were retired on 23 Oct 2026; other databases may still contain them), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
 - Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery; add approved contact details, office address, company history, privacy/legal pages and social links (none are published yet)
