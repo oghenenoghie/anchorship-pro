@@ -36,7 +36,7 @@ Read this before changing any public or admin UI. Extend what exists; do not cre
 
 ## Typography
 
-- Inter (`font-sans`, body/UI) + Manrope (`font-display`, headings) via `next/font/google` in `src/app/layout.tsx`.
+- Inter (`font-sans`, body/UI) + Manrope (`font-display`, headings), self-hosted with `next/font/local` from `src/app/fonts/` (variable WOFF2, latin subset, SIL OFL licences alongside). Do not switch back to `next/font/google`: it downloads fonts during every build, so a Google Fonts outage fails the deploy. To update or add a subset, take the files from the `@fontsource-variable/*` packages.
 - Controlled scale: homepage h1 `text-[2.35rem] sm:text-5xl xl:text-[3.6rem]` uppercase extrabold; page h1 (PageHero) `text-[2.05rem] → md:text-[2.875rem]`; section h2 `text-[1.75rem] md:text-[2.125rem]`; card h3 `text-lg`. Body 16px / 1.65.
 - Eyebrows: `.eyebrow` (uppercase, tracked, teal rule). Section/legend labels: `text-[.72rem] font-bold uppercase tracking-[.16em]`.
 

@@ -4,7 +4,7 @@ A full-stack starter for an offshore and marine services website. The design dir
 
 ## Included
 
-- Next.js App Router + TypeScript + Tailwind CSS, Inter + Manrope via `next/font`
+- Next.js App Router + TypeScript + Tailwind CSS, Inter + Manrope self-hosted with `next/font/local` (no network access needed at build time)
 - Marine design system: navy/ocean/teal tokens, shared components and a custom SVG line-art illustration for each of the nine vessel categories (see `.claude/skills/anchorship-design-system`)
 - Responsive charter-focused homepage, services, vessel catalogue with search/filters/sorting/pagination, nine category pages, vessel detail pages, charter request page, equipment catalogue, projects, news, contact
 - Neon PostgreSQL schema with Drizzle ORM and migrations
