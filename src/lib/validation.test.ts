@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { enquirySchema, fieldErrors, vesselSchema } from "@/lib/validation";
+import { changePasswordSchema, enquirySchema, fieldErrors, vesselSchema } from "@/lib/validation";
 
 const day = (offset: number) => new Date(Date.now() + offset * 86_400_000).toISOString().slice(0, 10);
 const base = { type: "vessel_charter", name: "Sam Example", email: "sam@example.com", message: "We need a tug for a 30-day tow." };
@@ -49,4 +49,25 @@ test("reserves vessel slugs that collide with catalogue routes", () => {
   const vessel = { name: "Category", slug: "category", listingType: "charter", availabilityStatus: "available", status: "draft", categoryId: "" };
   assert.equal(vesselSchema.safeParse(vessel).success, false);
   assert.ok(vesselSchema.safeParse({ ...vessel, slug: "category-one" }).success);
+});
+
+const pw = { currentPassword: "old password 1", newPassword: "harbour crane tide 42", confirmPassword: "harbour crane tide 42" };
+
+test("accepts a valid password change without trimming spaces", () => {
+  const r = changePasswordSchema.safeParse({ ...pw, newPassword: " harbour crane tide ", confirmPassword: " harbour crane tide " });
+  assert.ok(r.success);
+  assert.equal(r.data.newPassword, " harbour crane tide ");
+});
+
+test("rejects short, over-long, reused and mismatched new passwords with field messages", () => {
+  const errors = (input: object) => { const r = changePasswordSchema.safeParse({ ...pw, ...input }); assert.ok(!r.success); return fieldErrors(r.error); };
+  assert.match(errors({ newPassword: "short", confirmPassword: "short" }).newPassword, /at least 12/);
+  // 72 bytes is the most bcrypt reads; "é" is two bytes, so 37 of them (74 bytes) is too long despite being 37 characters.
+  assert.ok(changePasswordSchema.safeParse({ ...pw, newPassword: "a".repeat(72), confirmPassword: "a".repeat(72) }).success);
+  assert.match(errors({ newPassword: "a".repeat(73), confirmPassword: "a".repeat(73) }).newPassword, /at most 72/);
+  assert.match(errors({ newPassword: "é".repeat(37), confirmPassword: "é".repeat(37) }).newPassword, /at most 72/);
+  assert.match(errors({ currentPassword: "same password 12", newPassword: "same password 12", confirmPassword: "same password 12" }).newPassword, /different from your current/);
+  assert.match(errors({ confirmPassword: "harbour crane tide 43" }).confirmPassword, /do not match/);
+  assert.match(errors({ currentPassword: "" }).currentPassword, /current password/);
+  assert.match(errors({ confirmPassword: "" }).confirmPassword, /again/);
 });

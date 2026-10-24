@@ -29,10 +29,10 @@ src/app/(site)/                 public pages (layout = SiteHeader + SiteFooter, 
   request-vessel/               charter request page
   services, about, equipment, projects, news, contact
 src/app/(admin-auth)/admin/login  sign-in (outside the admin layout)
-src/app/admin/                  admin console (layout requires a user; pages call requireRole)
+src/app/admin/                  admin console (layout requires a user; pages call requireRole; account/ = change own password)
 src/app/api/                    enquiries, health, admin login/logout/vessels
 src/components/                 shared UI (see design-system skill), catalogue/, admin/
-src/lib/                        vessel-categories, catalogue, labels, company, queries, validation, auth, admin-access, email
+src/lib/                        vessel-categories, catalogue, labels, company, queries, validation, auth, session-stamp, password-policy, admin-access, email
 drizzle/                        versioned migrations (0002 enquiry charter details, 0003 supplied categories)
 ```
 

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { VESSEL_LIMITS as L } from "@/lib/vessel-limits";
 import { VESSEL_CATEGORY_SLUGS } from "@/lib/vessel-categories";
 import { ENQUIRY_TYPES, type EnquiryType } from "@/lib/labels";
+import { PASSWORD_MAX_BYTES, PASSWORD_MIN_LENGTH } from "@/lib/password-policy";
 const ENQUIRY_TYPE_VALUES = Object.keys(ENQUIRY_TYPES) as [EnquiryType, ...EnquiryType[]];
 // Vessel slugs that would collide with fixed routes under /vessels.
 export const RESERVED_VESSEL_SLUGS = ["category"];
@@ -31,6 +32,16 @@ export const enquirySchema = z.object({ type: z.enum(ENQUIRY_TYPE_VALUES, { erro
 // First message per field, for accessible field-level errors in the public form.
 export function fieldErrors(error: z.ZodError) { const out: Record<string, string> = {}; for (const issue of error.issues) { const key = String(issue.path[0] ?? ""); if (key && !(key in out)) out[key] = issue.message; } return out; }
 export const loginSchema = z.object({ email: z.string().email().max(255), password: z.string().min(8).max(200) });
+// Passwords are never trimmed: spaces are part of the password.
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Enter your current password.").max(200, "Enter your current password."),
+  newPassword: z.string().min(PASSWORD_MIN_LENGTH, `Use at least ${PASSWORD_MIN_LENGTH} characters.`)
+    .refine(v => new TextEncoder().encode(v).length <= PASSWORD_MAX_BYTES, `Use at most ${PASSWORD_MAX_BYTES} characters (fewer if it includes accented letters or symbols).`),
+  confirmPassword: z.string().min(1, "Enter the new password again."),
+}).superRefine((d, ctx) => {
+  if (d.newPassword && d.newPassword === d.currentPassword) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["newPassword"], message: "Choose a password that is different from your current one." });
+  if (d.confirmPassword && d.confirmPassword !== d.newPassword) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["confirmPassword"], message: "The new passwords do not match." });
+});
 export const vesselSchema = z.object({ name: z.string().trim().min(2).max(200), slug: z.string().trim().min(2).max(220).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "URL slug may only contain lowercase letters, numbers and single hyphens.").refine(v => !RESERVED_VESSEL_SLUGS.includes(v), "That URL slug is reserved by the website. Choose another."), summary: z.string().max(500).optional(), description: z.string().max(20000).optional(), listingType: z.enum(["sale","charter","sale_or_charter"]), availabilityStatus: z.enum(["available","under_offer","unavailable","sold","chartered"]), status: z.enum(["draft","published","archived"]), location: z.string().max(200).optional(), featured: z.coerce.boolean().optional(),
   categoryId: z.preprocess(blankToNull, z.string().uuid("Choose a category from the list.").nullable()), flag: z.string().trim().max(100).optional(),
   yearBuilt: z.preprocess(blankToNull, z.coerce.number({ invalid_type_error: "Year built must be a number." }).int("Year built must be a whole year.").min(L.yearBuilt.min, `Year built must be ${L.yearBuilt.min} or later.`).max(L.yearBuilt.max, `Year built must be ${L.yearBuilt.max} or earlier.`).nullable()),
