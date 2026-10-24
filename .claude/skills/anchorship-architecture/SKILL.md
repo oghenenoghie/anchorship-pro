@@ -36,7 +36,7 @@ src/lib/                        vessel-categories, catalogue, labels, company, q
 drizzle/                        versioned migrations (0002 enquiry charter details, 0003 supplied categories)
 ```
 
-- `src/lib/company.ts` holds the only approved public company copy (description, specialisation, sectors, fallback services). Add statements there only when the business supplies them.
+- `src/lib/company.ts` holds the only approved public company copy (description, specialisation, sectors, fallback services, contact email and office address). Add statements there only when the business supplies them. The office address is shown exactly as supplied; its house number and postcode are unconfirmed, so structured data carries only locality and country.
 - Database-backed public pages are `force-dynamic` or use search params; they catch database errors and render designed error/empty states.
 
 ## Verification

@@ -4,7 +4,7 @@ import { ArrowRight, Search, Ship, Handshake, Cog, ClipboardList, Layers, ListCh
 import { getFeaturedVessels, getPublishedContent, getCategoryCounts, getPublishedRegions, type VesselListing } from "@/lib/queries";
 import { VESSEL_CATEGORIES } from "@/lib/vessel-categories";
 import { AVAILABILITY, formatDate } from "@/lib/labels";
-import { FALLBACK_SERVICES, SECTORS, type ServiceIcon } from "@/lib/company";
+import { CONTACT, FALLBACK_SERVICES, SECTORS, type ServiceIcon } from "@/lib/company";
 import { siteUrl } from "@/lib/site-url";
 import { VesselCard, VesselGrid } from "@/components/vessel-card";
 import { CategoryGrid } from "@/components/category-card";
@@ -35,7 +35,8 @@ export default async function HomePage() {
   try { [featured, content, counts, regions] = await Promise.all([getFeaturedVessels(3), getPublishedContent(), getCategoryCounts(), getPublishedRegions()]); } catch { catalogueOffline = true; }
   const services = content.services.length ? content.services.map(s => ({ slug: s.slug, title: s.title, summary: s.summary, icon: undefined as ServiceIcon | undefined })) : FALLBACK_SERVICES;
   const stories = [...content.projects.slice(0, 2).map(p => ({ kind: "Project", title: p.title, summary: p.summary, image: p.imageUrl, date: p.publishedAt, href: "/projects" })), ...content.articles.slice(0, 2).map(a => ({ kind: "News", title: a.title, summary: a.excerpt, image: a.coverImageUrl, date: a.publishedAt, href: "/news" }))].slice(0, 3);
-  const orgJsonLd = { "@context": "https://schema.org", "@type": "Organization", name: "Anchorship", url: siteUrl() };
+  // The street line is left out until the house number and postcode are confirmed (see CONTACT in src/lib/company.ts).
+  const orgJsonLd = { "@context": "https://schema.org", "@type": "Organization", name: "Anchorship", url: siteUrl(), email: CONTACT.email, address: { "@type": "PostalAddress", addressLocality: CONTACT.office.locality, addressCountry: CONTACT.office.countryCode } };
 
   return (
     <>

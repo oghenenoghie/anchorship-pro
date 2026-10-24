@@ -55,7 +55,8 @@ Read this before changing any public or admin UI. Extend what exists; do not cre
 | Component | File | Notes |
 | --- | --- | --- |
 | SiteHeader / NavLink / NavDropdown / MobileNav | site-header.tsx, nav-link.tsx, nav-dropdown.tsx, mobile-nav.tsx | Navy sticky header (72px, `--header-h`). Vessels dropdown panel is server-rendered children of the client disclosure. |
-| SiteFooter, BrandLink | site-footer.tsx, brand.tsx | Footer lists categories/services/company. No contact details until approved. |
+| SiteFooter, BrandLink | site-footer.tsx, brand.tsx | Footer lists categories/services/company and the approved contact details. Social and legal links only once supplied. |
+| ContactDetails | contact-details.tsx | Email and office from `CONTACT` in src/lib/company.ts. `variant="footer"` (navy, compact) or `"panel"` (labelled). Never hard-code contact details elsewhere. |
 | PageHero, SectionHeading, Breadcrumbs | page-hero.tsx, section-heading.tsx, breadcrumbs.tsx | Breadcrumbs also emit BreadcrumbList JSON-LD. |
 | Buttons | `.btn` + `.btn-primary` (teal), `.btn-dark`, `.btn-outline`/`.btn-secondary`, `.btn-light` (on navy), `.btn-sm`, `.text-link` | 44px default height, 36px small. One teal primary action per view region. |
 | MarineIllustration, HeroVisual | marine-illustration.tsx, hero-visual.tsx | See illustration rules below. |

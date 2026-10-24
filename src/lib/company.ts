@@ -1,9 +1,17 @@
 // Public company copy in one place. Only statements already on the website or supplied by the business belong here:
-// no fleet sizes, years of experience, certifications, client names, addresses or response-time promises.
+// no fleet sizes, years of experience, certifications, client names or response-time promises, and contact details
+// only as the business supplied them.
 export const COMPANY_DESCRIPTION = "Marine and offshore solutions, vessel brokerage and chartering support. Contact our team to discuss your requirements.";
 // Supplied by the business with the 2026 redesign brief.
 export const SPECIALISATION = "Anchorship charters offshore vessels and marine equipment to commercial, offshore energy, oil and gas, dredging and marine construction clients.";
 export const SECTORS = ["Offshore energy", "Oil and gas", "Dredging", "Marine construction", "Commercial marine"] as const;
+
+// Supplied by the business on 24 Oct 2026. The office address is reproduced exactly as given (the house number and
+// full postcode are still to be confirmed), so it is not split into street and postcode fields anywhere.
+export const CONTACT = {
+  email: "info@anchorship.nl",
+  office: { lines: ["Eemkerkstraat 3312 Dordrecht", "The Netherlands"], locality: "Dordrecht", countryCode: "NL" },
+} as const;
 
 // Shown when no services are published in the database. Mirrors the service areas already on the website.
 export type ServiceIcon = "charter" | "brokerage" | "equipment" | "management";

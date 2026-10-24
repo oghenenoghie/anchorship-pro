@@ -31,7 +31,7 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 - Add vessel deletion, vessel image upload/editing, and category management (the production Neon database has migrations 0002/0003 applied and its five unused placeholder categories were retired on 23 Oct 2026; other databases may still contain them), full CRUD for equipment/services/projects/articles, and enquiry status/assignment management
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
-- Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery; add approved contact details, office address, company history, privacy/legal pages and social links (none are published yet)
+- Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery; add company history, privacy/legal pages and social links (LinkedIn and Facebook URLs to follow from the business). Contact email and office address were supplied on 24 Oct 2026 and are shown in the footer and on the contact page; confirm the office house number and full postcode
 - Confirm the service list in `src/lib/company.ts` (Vessel Chartering, Marine Equipment, Vessel Brokerage, Ship Management) against current offerings
 - Verify SEO redirects and existing URL preservation against the current live website
 
