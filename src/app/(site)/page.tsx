@@ -10,7 +10,7 @@ import { VesselCard, VesselGrid } from "@/components/vessel-card";
 import { CategoryGrid } from "@/components/category-card";
 import { SectionHeading } from "@/components/section-heading";
 import { EmptyState } from "@/components/empty-state";
-import { HeroVisual } from "@/components/hero-visual";
+import { HeroMedia } from "@/components/hero-media";
 import { GetForm } from "@/components/get-form";
 import { MarineIllustration } from "@/components/marine-illustration";
 
@@ -42,11 +42,10 @@ export default async function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       {/* A · Hero */}
-      <section className="surface-dark relative isolate overflow-hidden">
-        <div aria-hidden className="bg-blueprint-dark absolute inset-0 -z-10" />
-        <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_75%_40%,rgba(34,166,161,.14),transparent_55%)]" />
-        <div className="container-wide grid items-center gap-12 pb-32 pt-14 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-40 lg:pt-24">
-          <div>
+      <section data-hero className="surface-dark relative isolate overflow-hidden">
+        <HeroMedia />
+        <div className="container-wide flex min-h-[600px] items-center pb-40 pt-16 md:min-h-[640px] md:pt-20 lg:min-h-[700px] lg:pb-44 lg:pt-24">
+          <div className="max-w-2xl">
             <p className="eyebrow">Offshore vessel charter</p>
             <h1 className="mt-5 font-display text-[2.35rem] font-extrabold uppercase leading-[1.02] tracking-[-.01em] sm:text-5xl xl:text-[3.6rem]">
               Offshore vessels.<span className="mt-1 block text-marine-300">Ready for your next operation.</span>
@@ -61,7 +60,6 @@ export default async function HomePage() {
               <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-white">{SECTORS.map(s => <li key={s} className="flex items-center gap-2"><span aria-hidden className="h-1 w-1 rounded-full bg-marine" />{s}</li>)}</ul>
             </div>
           </div>
-          <HeroVisual />
         </div>
       </section>
 

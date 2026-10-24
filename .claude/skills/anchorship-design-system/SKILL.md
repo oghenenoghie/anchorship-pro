@@ -11,7 +11,7 @@ Read this before changing any public or admin UI. Extend what exists; do not cre
 
 - Premium offshore charter platform for B2B procurement teams: engineered, technical, spacious, confident. Not a generic SaaS template.
 - Primary reference: Dutch Offshore Contractors (industrial hierarchy, bold navy heroes). Secondary: SeaSpeed Marine (vessel discovery, clear enquiry paths). Never copy their code, layout, copy, branding or imagery.
-- Imagery: no unverified stock photos. Use the marine illustration system or rights-cleared photography supplied by Anchorship. The hero uses a technical illustration "plate", not a photo.
+- Imagery: no unverified stock photos. Use the marine illustration system or photography supplied by Anchorship. The homepage hero has a moving photographic background (`HeroMedia`, images supplied by Anchorship in Oct 2026, AI-generated); inner pages use `PageHero` with illustrations. Never show invented vessel names, MMSI numbers or home ports in imagery (they were retouched out of the supplied bow shot), and never caption a photo as Anchorship fleet unless the business confirms it.
 
 ## Tokens (tailwind.config.ts + :root in src/app/globals.css)
 
@@ -31,7 +31,7 @@ Read this before changing any public or admin UI. Extend what exists; do not cre
 
 - Radii: cards/panels 6px (`rounded-md`, `.card`, `.panel`), buttons/inputs/badges 3–4px. No pill cards or oversized rounded containers.
 - Shadows: `shadow-card` (resting), `shadow-lift` (hover/elevated), `shadow-soft` (login card). Borders do most of the work.
-- Gradients: only the subtle radial glow in the homepage hero. Blueprint grids (`.bg-blueprint`, `.bg-blueprint-dark`) mark technical areas.
+- Gradients: only the navy wash over the homepage hero photography (solid behind the text, opening to the right on `lg`; an even 80% tint below `lg`). Blueprint grids (`.bg-blueprint`, `.bg-blueprint-dark`) mark technical areas.
 - Headings read `--heading`; `.surface-dark` sets it to white and `.surface-light` resets it to navy, so utility colour classes still win.
 
 ## Typography
@@ -59,7 +59,8 @@ Read this before changing any public or admin UI. Extend what exists; do not cre
 | ContactDetails | contact-details.tsx | Email and office from `CONTACT` in src/lib/company.ts. `variant="footer"` (navy, compact) or `"panel"` (labelled). Never hard-code contact details elsewhere. |
 | PageHero, SectionHeading, Breadcrumbs | page-hero.tsx, section-heading.tsx, breadcrumbs.tsx | Breadcrumbs also emit BreadcrumbList JSON-LD. |
 | Buttons | `.btn` + `.btn-primary` (teal), `.btn-dark`, `.btn-outline`/`.btn-secondary`, `.btn-light` (on navy), `.btn-sm`, `.text-link` | 44px default height, 36px small. One teal primary action per view region. |
-| MarineIllustration, HeroVisual | marine-illustration.tsx, hero-visual.tsx | See illustration rules below. |
+| HeroMedia, HeroMotionToggle | hero-media.tsx, hero-motion-toggle.tsx | Homepage hero background: two photos in `src/assets/hero` (colour grade baked in), CSS push-in and cross-fade on a 10 s loop (`.hero-shot` in globals.css), pause button (WCAG 2.2.2), still and without the button under reduced motion. Decorative (`alt=""`). The first image is `priority` (LCP). |
+| MarineIllustration | marine-illustration.tsx | See illustration rules below. |
 | MarineCategoryCard, CategoryGrid | category-card.tsx | Count shows real published listings or "On request". |
 | VesselCard, VesselGrid | vessel-card.tsx | Particulars as label/value rows; image or labelled "Category illustration". |
 | VesselCatalogue, FiltersPanel, GetForm | catalogue/*, get-form.tsx | GET forms; empty params dropped on submit. |
@@ -80,7 +81,7 @@ Labels for enum values come from `src/lib/labels.ts` (availability "On charter",
 
 ## Motion
 
-- CSS only: button/border colour transitions, card lift (`-translate-y-0.5` + `shadow-lift`), illustration wave drift on hover, teal accent stroke emphasis, nav underline.
+- CSS only: button/border colour transitions, card lift (`-translate-y-0.5` + `shadow-lift`), illustration wave drift on hover, teal accent stroke emphasis, nav underline, and the homepage hero photo loop (transform/opacity keyframes only, never JS-driven per frame; anything moving longer than 5 s needs a pause control).
 - Respect `prefers-reduced-motion` (globals.css disables animation/transition durations and the hero drift). No parallax, floating loops or heavy libraries.
 
 ## Accessibility
