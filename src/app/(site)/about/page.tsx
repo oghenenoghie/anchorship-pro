@@ -11,7 +11,8 @@ const APPROACH = [
   { title: "Match the right vessel type", body: "Nine dedicated categories keep requirements specific, from tugs and workboats to FPSOs, jack-ups and dredgers." },
   { title: "Communicate clearly", body: "Clear conversations and verified information, so decisions are made on facts rather than assumptions." },
 ];
-// Company history, certifications, team and office locations: add here once the approved copy is available.
+// Company history, certifications and team: add here once the approved copy is available. Contact details live in
+// src/lib/company.ts (footer and contact page).
 export default function About() {
   return (
     <>

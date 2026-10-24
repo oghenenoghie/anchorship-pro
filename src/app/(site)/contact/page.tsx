@@ -3,8 +3,9 @@ import Link from "next/link";
 import { ArrowRight, Ship, Handshake, Cog, MessagesSquare } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { EnquiryForm } from "@/components/enquiry-form";
+import { ContactDetails } from "@/components/contact-details";
 import { ENQUIRY_TYPES, type EnquiryType } from "@/lib/labels";
-export const metadata: Metadata = { title: "Contact Anchorship", description: "Send a vessel, charter, equipment or general enquiry to the Anchorship team.", alternates: { canonical: "/contact" } };
+export const metadata: Metadata = { title: "Contact Anchorship", description: "Send a vessel, charter, equipment or general enquiry to the Anchorship team, or email info@anchorship.nl. Office in Dordrecht, the Netherlands.", alternates: { canonical: "/contact" } };
 const TOPICS = [
   { icon: Ship, title: "Vessel chartering", body: "For a specific vessel or charter requirement, the charter request form captures region, dates and technical needs.", href: "/request-vessel", cta: "Request a vessel" },
   { icon: Handshake, title: "Vessel sale or acquisition", body: "Discuss vessel sale and acquisition requirements with our team." },
@@ -23,6 +24,10 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
         <div className="container-wide grid gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-10">
           <aside className="grid content-start gap-5">
             <div className="panel p-5">
+              <h2 className="text-[.72rem] font-bold uppercase tracking-[.16em] text-navy">Contact details</h2>
+              <div className="mt-4"><ContactDetails variant="panel" /></div>
+            </div>
+            <div className="panel p-5">
               <h2 className="text-[.72rem] font-bold uppercase tracking-[.16em] text-navy">How we can help</h2>
               <ul className="mt-4 grid gap-5">
                 {TOPICS.map(({ icon: Icon, title, body, href, cta }) => (
@@ -33,7 +38,6 @@ export default async function Contact({ searchParams }: { searchParams: Promise<
                 ))}
               </ul>
             </div>
-            {/* Office address, telephone and email: add here once approved contact details are confirmed. */}
           </aside>
           <div className="panel p-6 sm:p-8">
             <h2 className="font-display text-2xl font-bold">Send an enquiry</h2>
