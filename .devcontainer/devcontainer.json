@@ -1,0 +1,23 @@
+{
+  // GitHub Codespaces / Dev Containers setup. Start the site with `npm run dev`; see "Run in GitHub Codespaces" in README.md.
+  "name": "Anchorship",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "postCreateCommand": "npm ci",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Anchorship site", "onAutoForward": "notify" }
+  },
+  // Offered when the codespace is created; set them once as Codespaces secrets so every codespace gets them.
+  "secrets": {
+    "DATABASE_URL": {
+      "description": "Neon pooled connection string (postgresql://...) for a development database or branch, not the live site's database.",
+      "documentationUrl": "https://neon.tech/docs/connect/connect-from-any-app"
+    },
+    "AUTH_SECRET": {
+      "description": "Random value of at least 32 characters for signing admin sessions. Generate one with: openssl rand -base64 32"
+    }
+  },
+  "customizations": {
+    "vscode": { "extensions": ["bradlc.vscode-tailwindcss"] }
+  }
+}

@@ -45,6 +45,23 @@ The seed script requires `DATABASE_URL` and reads `ADMIN_EMAIL` / `ADMIN_PASSWOR
 
 After deploying, open `/api/health` to check the configuration: it reports whether `DATABASE_URL`, the database (and its migrations), `AUTH_SECRET` and `NEXT_PUBLIC_SITE_URL` are usable, without revealing their values. Environment variable changes on Vercel only apply to new deployments, so redeploy after changing them.
 
+## Run in GitHub Codespaces
+
+The repository includes a dev container (`.devcontainer/devcontainer.json`): Node.js 22, dependencies installed with `npm ci` when the codespace is created, and port 3000 forwarded.
+
+1. Add two Codespaces secrets, once: repository **Settings → Secrets and variables → Codespaces → New repository secret** (or your own [Codespaces settings](https://github.com/settings/codespaces), giving the secret access to this repository).
+   - `DATABASE_URL`: the pooled Neon connection string of a development database or Neon branch. Avoid the live site's database: anything you change in the codespace changes it.
+   - `AUTH_SECRET`: a random value of at least 32 characters (`openssl rand -base64 32`).
+2. On the repository page choose **Code → Codespaces → Create codespace on main** and wait for `npm ci` to finish. Secrets added while a codespace is running only reach it after **Codespaces: Rebuild Container** (or a new codespace).
+3. In the terminal run `npm run dev`, then open the forwarded port 3000 from the **Ports** tab (or the pop-up). Check `/api/health` first.
+4. If the development database is new, apply the schema and create an admin user in the terminal:
+   ```bash
+   npm run db:migrate
+   ADMIN_EMAIL=you@example.com ADMIN_PASSWORD='a-long-unique-password' npm run db:seed
+   ```
+
+Inside a codespace, `next.config.ts` trusts that codespace's forwarded address for Server Actions (sign-out, change password); without it Next.js rejects them as cross-origin. No extra origin is trusted anywhere else.
+
 ## Security notes before production
 
 - Use a long random `AUTH_SECRET`; never commit `.env.local`.

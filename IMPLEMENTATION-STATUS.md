@@ -32,6 +32,7 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 - Add production rate limiting, CSRF/origin policy, email retry queue, image upload integration, audit review UI, and automated tests
 - Review all auth and database code; configure MFA/identity provider if needed
 - Replace placeholder copy and image references with verified Anchorship-approved content and rights-cleared imagery; add company history, privacy/legal pages and social links (LinkedIn and Facebook URLs to follow from the business). Contact email and office address were supplied on 24 Oct 2026 and are shown in the footer and on the contact page; confirm the office house number and full postcode
+- The homepage hero photos (`src/assets/hero`, supplied by the business as an AI Studio project, AI-generated) are placeholders for real photography of Anchorship operations; replace them when rights-cleared photos exist
 - Confirm the service list in `src/lib/company.ts` (Vessel Chartering, Marine Equipment, Vessel Brokerage, Ship Management) against current offerings
 - Verify SEO redirects and existing URL preservation against the current live website
 
