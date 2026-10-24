@@ -15,6 +15,20 @@
       "when": 1792395020309,
       "tag": "0001_vessel_particulars",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792740686532,
+      "tag": "0002_enquiry_charter_details",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792740687557,
+      "tag": "0003_supplied_vessel_categories",
+      "breakpoints": true
     }
   ]
 }

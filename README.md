@@ -4,10 +4,11 @@ A full-stack starter for an offshore and marine services website. The design dir
 
 ## Included
 
-- Next.js App Router + TypeScript + Tailwind CSS
-- Responsive corporate homepage, services, vessel catalogue/detail pages, equipment catalogue, projects, news, contact
+- Next.js App Router + TypeScript + Tailwind CSS, Inter + Manrope self-hosted with `next/font/local` (no network access needed at build time)
+- Marine design system: navy/ocean/teal tokens, shared components and a custom SVG line-art illustration for each of the nine vessel categories (see `.claude/skills/anchorship-design-system`)
+- Responsive charter-focused homepage, services, vessel catalogue with search/filters/sorting/pagination, nine category pages, vessel detail pages, charter request page, equipment catalogue, projects, news, contact
 - Neon PostgreSQL schema with Drizzle ORM and migrations
-- Admin sign-in, dashboard, vessel management starter, enquiry management starter
+- Admin sign-in, dashboard with live metrics, vessel management (filterable list, create/edit), enquiry inbox with filters and detail view
 - Server-side validation, signed session cookies, role checks, audit events
 - Public contact/vessel enquiry endpoints and optional email notification hook
 - Seed data marked as demo data
@@ -23,9 +24,10 @@ A full-stack starter for an offshore and marine services website. The design dir
 
 1. Copy `.env.example` to `.env.local` and set `DATABASE_URL` and `AUTH_SECRET`. `drizzle-kit` and the seed script load `.env.local` the same way Next.js does.
 2. Install dependencies: `npm install`.
-3. Apply the schema: `npm run db:migrate` (or `npm run db:push` for a disposable development database). The initial migration is committed in `drizzle/`; after changing `src/db/schema.ts`, run `npm run db:generate` and commit the new migration.
+3. Apply the schema: `npm run db:migrate` (this also inserts the nine supplied vessel categories) (or `npm run db:push` for a disposable development database). The initial migration is committed in `drizzle/`; after changing `src/db/schema.ts`, run `npm run db:generate` and commit the new migration.
 4. Create the first admin user by setting `ADMIN_EMAIL` and `ADMIN_PASSWORD` in your local shell, then run `npm run db:seed`. Seed data is demonstrative; do not use demo credentials in production.
 5. Run `npm run dev` and visit `http://localhost:3000`.
+6. Run the checks: `npm run typecheck`, `npm test` and `npm run build`.
 
 Example PowerShell setup:
 
@@ -61,12 +63,12 @@ See `.env.example`. `DATABASE_URL` should generally use Neon's pooled connection
 ## Project layout
 
 ```text
-src/app/(site)       public routes
+src/app/(site)       public routes (catalogue under vessels/, charter requests under request-vessel/)
 src/app/admin        admin routes
 src/app/api          public API routes
-src/components       shared UI
+src/components       shared UI, marine illustrations, catalogue and admin components
 src/db               schema, connection, seed
-src/lib              auth, validation, email, queries
+src/lib              vessel categories, catalogue params, labels, company copy, auth, validation, email, queries
 .claude/skills       Claude Code project workflows
 ```
 

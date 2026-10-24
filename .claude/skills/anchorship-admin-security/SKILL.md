@@ -16,3 +16,13 @@ description: Implement or review admin authentication, session handling, role-ba
 - Return generic login errors and avoid leaking whether an email exists.
 - Verify unauthorised and lower-role requests fail in automated tests.
 - Recommend MFA or managed identity for production staff access.
+
+# Admin console conventions
+
+- Section access lives in `src/lib/admin-access.ts` (`ADMIN_ACCESS`): vessels = super_admin, editor, sales; equipment and services = super_admin, editor; enquiries = all four roles; settings = super_admin. Pages call `requireRole(ADMIN_ACCESS.<section>)`; API routes keep their own `requireApiRole` lists. Keep them in agreement.
+- The sidebar hides links a role cannot open (`canAccess`), and the overview hides panels likewise. Hiding is cosmetic; the server check is the control.
+- `requireUser` is cached per request (React `cache`) so layout and page share one lookup; the account's active flag and role always come from the database.
+- Do not add a `loading.tsx` under `src/app/admin`: it streams the page and turns `requireRole` redirects and `notFound()` into client-side responses with a 200 status.
+- Validate route ids (`z.string().uuid()`) before querying, and 404 on missing records.
+- Dashboard figures must come from real queries (`getAdminStats`); never hard-code metrics or availability.
+
