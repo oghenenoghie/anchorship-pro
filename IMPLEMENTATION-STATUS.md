@@ -24,6 +24,7 @@ This ZIP is a substantial runnable-oriented starter scaffold, not a production-c
 - Admin visual refresh: role-aware sidebar, real metrics, filterable vessel and enquiry lists with mobile layouts, new read-only enquiry detail page, sectioned vessel editor
 - Supplied categories inserted by migration 0003; earlier placeholder categories and their vessels are left untouched
 - Unit tests (`npm test`) for categories, catalogue parameters and enquiry validation; verified end to end against PostgreSQL 16 through a local Neon HTTP shim
+- Change password at `/admin/account` for every role (Server Action, audit event `admin_user.password_change`). Sessions are tied to the password they were issued under, so a change or reset signs out every other session; sessions issued before this release are refused once and need a fresh sign-in
 
 ## Still required before production
 - Connect a Neon database and run `npm run db:migrate` + `npm run db:seed` against it

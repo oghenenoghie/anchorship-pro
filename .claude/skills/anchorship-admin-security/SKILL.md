@@ -19,9 +19,12 @@ description: Implement or review admin authentication, session handling, role-ba
 
 # Admin console conventions
 
-- Section access lives in `src/lib/admin-access.ts` (`ADMIN_ACCESS`): vessels = super_admin, editor, sales; equipment and services = super_admin, editor; enquiries = all four roles; settings = super_admin. Pages call `requireRole(ADMIN_ACCESS.<section>)`; API routes keep their own `requireApiRole` lists. Keep them in agreement.
+- Section access lives in `src/lib/admin-access.ts` (`ADMIN_ACCESS`): vessels = super_admin, editor, sales; equipment and services = super_admin, editor; enquiries = all four roles; settings = super_admin. The Account page is open to every signed-in role and only ever changes the caller's own account. Pages call `requireRole(ADMIN_ACCESS.<section>)`; API routes keep their own `requireApiRole` lists. Keep them in agreement.
 - The sidebar hides links a role cannot open (`canAccess`), and the overview hides panels likewise. Hiding is cosmetic; the server check is the control.
-- `requireUser` is cached per request (React `cache`) so layout and page share one lookup; the account's active flag and role always come from the database.
+- `getActiveUser` (cached per request with React `cache`) is the one place a session is validated: signed cookie, account active, and the token's password stamp matching the current hash. `requireUser`/`requireRole` (pages, Server Actions) and `requireApiRole` (API routes) all go through it; role, name and email always come from the database.
+- Sessions are tied to the password: `createSession(user, passwordHash)` stores an HMAC fingerprint of the hash (`src/lib/session-stamp.ts`). Any password change or reset (account page, seed, SQL) ends every session issued before it. Always pass the hash that was just stored.
+- Server Components cannot modify cookies (`cookies().delete()` throws there). Redirect a stale session to `/admin/login` and let the next sign-in replace the cookie; the login page only skips its form for a session `getActiveUser` accepts, so there is no redirect loop.
+- Own-account changes live at `/admin/account` (every role) as a Server Action (same-origin only, works without JavaScript). Verify the current password, store the hash and its audit event in one `db.batch`, then re-issue the caller's session. Passwords: at least 12 characters, at most 72 bytes (bcrypt's limit; refuse rather than truncate), never trimmed, never logged or put in audit metadata. Limits live in `src/lib/password-policy.ts` so the client form does not import Zod.
 - Do not add a `loading.tsx` under `src/app/admin`: it streams the page and turns `requireRole` redirects and `notFound()` into client-side responses with a 200 status.
 - Validate route ids (`z.string().uuid()`) before querying, and 404 on missing records.
 - Dashboard figures must come from real queries (`getAdminStats`); never hard-code metrics or availability.

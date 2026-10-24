@@ -8,7 +8,7 @@ A full-stack starter for an offshore and marine services website. The design dir
 - Marine design system: navy/ocean/teal tokens, shared components and a custom SVG line-art illustration for each of the nine vessel categories (see `.claude/skills/anchorship-design-system`)
 - Responsive charter-focused homepage, services, vessel catalogue with search/filters/sorting/pagination, nine category pages, vessel detail pages, charter request page, equipment catalogue, projects, news, contact
 - Neon PostgreSQL schema with Drizzle ORM and migrations
-- Admin sign-in, dashboard with live metrics, vessel management (filterable list, create/edit), enquiry inbox with filters and detail view
+- Admin sign-in, dashboard with live metrics, vessel management (filterable list, create/edit), enquiry inbox with filters and detail view, and a change-password page (`/admin/account`) for every role
 - Server-side validation, signed session cookies, role checks, audit events
 - Public contact/vessel enquiry endpoints and optional email notification hook
 - Seed data marked as demo data
@@ -41,7 +41,7 @@ npm run db:seed
 npm run dev
 ```
 
-The seed script requires `DATABASE_URL` and reads `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the process environment. Set those variables again whenever you run the seed script to create/update the admin user.
+The seed script requires `DATABASE_URL` and reads `ADMIN_EMAIL` / `ADMIN_PASSWORD` from the process environment. Set those variables again whenever you run the seed script to create/update the admin user. Signed-in users change their own password at `/admin/account`; re-running the seed is the way to reset a forgotten one. Either way, every session issued under the old password ends.
 
 After deploying, open `/api/health` to check the configuration: it reports whether `DATABASE_URL`, the database (and its migrations), `AUTH_SECRET` and `NEXT_PUBLIC_SITE_URL` are usable, without revealing their values. Environment variable changes on Vercel only apply to new deployments, so redeploy after changing them.
 
